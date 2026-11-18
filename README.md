@@ -1,16 +1,74 @@
-# React + Vite
+# Product Admin Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React single page application for a coffee store ("Coffee R Us"). Visitors can browse and search products, and an administrator can add, edit and delete them. Data is persisted through a simulated backend (json-server).
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Landing page with store info fetched from the backend
+- Shop page with live search and origin (location) checkbox filters
+- Admin Portal with a validated form to add products (POST)
+- Product detail page to edit price and description (PATCH) and delete products (DELETE)
+- Client-side routing with a navigation bar
+- Responsive layout based on the design mock-up
 
-## React Compiler
+## Routes
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Route | Description |
+|---|---|
+| `/` | Home / landing page |
+| `/shop` | Product grid with search and filters |
+| `/shop/:id` | Product detail: edit and delete |
+| `/admin` | Admin Portal: add product form and product list |
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+React (Vite), React Router, json-server, Vitest, React Testing Library
+
+## Hooks Used
+
+- Standard: `useState`, `useEffect`, `useContext`, `useRef`, `useId`, `useParams`, `useNavigate`
+- Custom: `useFetch` (generic GET), `useProducts` (products state and CRUD actions)
+
+## Component Tree
+
+```
+App (ProductsProvider)
+├── NavBar
+└── Routes
+    ├── HomePage
+    ├── ShopPage
+    │   ├── SearchBar
+    │   ├── OriginFilter
+    │   └── ProductCard (×n)
+    ├── ProductDetailPage
+    ├── AdminPage
+    │   └── ProductForm
+    └── NotFoundPage
+```
+
+## Getting Started
+
+```bash
+git clone https://github.com/luke kiprop 327-dot/product-admin-portal.git
+cd product-admin-portal
+npm install
+```
+
+Run the backend and the app in two terminals:
+
+```bash
+npm run server   # json-server at http://localhost:3001
+npm run dev      # app at http://localhost:5173
+```
+
+Run the tests:
+
+```bash
+npx vitest run
+```
+
+## Known Limitations
+
+- The json-server backend must be running for data to load.
+- No authentication: anyone can open the Admin Portal.
+- Only price and description are editable on the detail page.
